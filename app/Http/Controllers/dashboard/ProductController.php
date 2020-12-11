@@ -8,6 +8,7 @@ use App\Categoria;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProduct;
 use App\Http\Controllers\Controller;
+use App\ProductImage;
 
 class ProductController extends Controller
 {
@@ -16,14 +17,31 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function __construct()
     {
-        
-     
-        $productos=Product::orderBy('id','desc')->paginate(8);
+        $this->middleware('auth');
+    }
+    public function index(Request $request)
+    {
+        $listCategorias=Categoria::pluck('id','nombre');
+   
+        $productos=Product::with('categoria')->orderBy('id','desc');
+        if($request->has('search')){
+            $productos=$productos
+            ->where('nombre','like','%'.request('search').'%');
+            //->orWhere('category_id','like','%'.request('search').'%');
+    
+        }
+        if($request->has('categorysearch')){
+            $productos=$productos
+           
+            ->where('category_id','like','%'.request('categorysearch').'%');
+    
+        }
+       $productos=$productos->paginate(8);
         $cantidad=$productos->total();
         
-         return view('dashboard.productos.index',['productos'=>$productos,'cantidad'=>$cantidad]);
+         return view('dashboard.productos.index',['productos'=>$productos,'cantidad'=>$cantidad,'listCategorias'=>$listCategorias]);
     }
 
    
@@ -36,6 +54,7 @@ class ProductController extends Controller
     public function create()
     {
         $listCategorias=Categoria::pluck('id','nombre');
+       
         $listUsers=User::pluck('id','name');
 
          return view("dashboard.productos.create",['producto'=>new Product(),'listCategorias'=>$listCategorias,'listUsers'=>$listUsers]);
@@ -75,6 +94,7 @@ class ProductController extends Controller
      */
     public function edit(Product $producto)
     {
+        
         $listCategorias=Categoria::pluck('id','nombre');
        
 
@@ -90,10 +110,34 @@ class ProductController extends Controller
      */
     public function update(StoreProduct $request, Product $product)
     {
+        
         $product->update($request->validated());
         return back()->with('status','Producto Actualizado!');
     }
+    public function image(Request $request, Product $producto)
+    {
+       
+       $request->validate([
+        'image' => 'required|mimes:jpeg,bmp,png|max:10240'
+       ]);
+       $filename= time().".".$request->image->extension();
+       $request->image->move(public_path('images'),$filename);
 
+       ProductImage::create(['image'=>$filename, 'product_id'=>$producto->id]);
+       return back()->with('status','Imagen cargada con exito!');
+    }
+
+    public function imageDownload(ProductImage $image){
+       
+        $pathImage=public_path('images/').$image->image;
+        return response()->download($pathImage);
+    }
+    public function imagedelete(ProductImage $image){
+       $image->delete();
+        $pathImage=public_path('images/').$image->image;
+        unlink($pathImage);
+        return back()->with('status','imagen '.$image->id.' eliminada');
+    }
     /**
      * Remove the specified resource from storage.
      *

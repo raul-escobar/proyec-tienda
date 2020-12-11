@@ -17,8 +17,11 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('nombre', 500)->nullable();
             $table->string('precio', 500)->nullable();
+            $table->string('estado', 500)->default('pendiente');
             $table->text('detalle')->nullable();
+            $table->string('cantidad',10)->nullable()->default(1);
             $table->bigInteger('category_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
 
             $table->timestamps();
         });

@@ -11,6 +11,10 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','rol.admin']);
+    }
     public function index()
     {
         $users=User::orderBy('id','desc')->paginate(8);

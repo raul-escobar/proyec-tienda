@@ -9,6 +9,10 @@ use App\Http\Requests\StoreCategoria;
 
 class CategoriaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','rol.admin']);
+    }
     public function index()
     {
         $categorias=Categoria::orderBy('id','desc')->paginate(10);

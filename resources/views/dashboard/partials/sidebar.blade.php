@@ -11,14 +11,28 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
+     @if (auth()->user()->rol_id==3 || auth()->user()->rol_id==2)
+     <li class="nav-item {{ Request::path()=='dashboard/main' ? 'active':''}}">
+      <a class="nav-link" href="{{route('main.index')}}">
+        <i class="material-icons">location_city</i>
+        <p>Dashboard</p>
+      </a>
+    </li>
+    <li class="nav-item {{ Request::path()=='dashboard/cat' ? 'active':''}}">
+      <a class="nav-link" href="{{route('cat.index')}}">
+        <i class="material-icons">location_city</i>
+        <p>Categorias</p>
+      </a>
+    </li>
+    <li class="nav-item {{ Request::path()=='dashboard/user' ? 'active':''}}">
+      <a class="nav-link" href="{{route('user.index')}}">
+        <i class="material-icons">assignment_ind</i>
+        <p>Usuarios</p>
+      </a>
+    </li>
+     @endif
       
       
-      <li class="nav-item {{ Request::path()=='dashboard/cat' ? 'active':''}}">
-        <a class="nav-link" href="{{route('cat.index')}}">
-          <i class="material-icons">location_city</i>
-          <p>Categorias</p>
-        </a>
-      </li>
       <li class="nav-item {{ Request::path()=='dashboard/producto' ? 'active':''}}">
         <a class="nav-link" href="{{route('producto.index')}}">
           <i class="material-icons">library_books</i>
@@ -28,18 +42,18 @@
      
    
    
-      <li class="nav-item {{ Request::path()=='dashboard/user' ? 'active':''}}">
-        <a class="nav-link" href="{{route('user.index')}}">
-          <i class="material-icons">assignment_ind</i>
-          <p>Usuarios</p>
-        </a>
-      </li>
+     
   
-      <li class="nav-item ">
-        <p class="nav-link alert alert-success">
+      <li class="nav-item active-pro mb-3">
+        <p class="nav-link alert alert-success ">
           <i class="material-icons text-white">person</i>
-          <label for="" class="text-white ">Usuario:</label>
+        <label for="" class="text-white ">Usuario:{{auth()->user()->name}}</label>
+        <br>
+        <i class="material-icons text-white">task</i>
+        <label for="" class="text-white ">Rol:{{auth()->user()->rol->nombre}}</label>
         </p>
+        
+        
       </li>
      
     </ul>

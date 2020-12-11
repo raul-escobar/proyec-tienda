@@ -27,7 +27,9 @@ class StoreProduct extends FormRequest
             'nombre'=>'required|max:200',
             'detalle'=>'required|max:200',
             'precio'=>'required',
-            'category_id'=>'required'
+            'category_id'=>'required',
+            'user_id'=>'required',
+            'cantidad'=>'required'
         ];
     }
 }

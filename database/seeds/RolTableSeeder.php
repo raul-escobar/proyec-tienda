@@ -14,23 +14,24 @@ class RolTableSeeder extends Seeder
     {
         Rol::truncate();
         Rol::create([
-            'nombre'=>"encargado",
-            'descripcion'=>"PUESTO DE ENCARGADO",
+            'nombre'=>"cliente",
+            'descripcion'=>"Rol por defecto",
            
         ]);
         Rol::create([
-           'nombre'=>"cliente",
-           'descripcion'=>"ACCESO BASICO",
+           'nombre'=>"encargado",
+           'descripcion'=>"Rol con privilegios y acceso casi ilimitado",
           
        ]);
-       Rol::create([
-        'nombre'=>"contador",
-        'descripcion'=>"ACCESO LIMITADO",
+      
+    Rol::create([
+        'nombre'=>"supervisor",
+        'descripcion'=>"Rol maximo y acceso total",
        
     ]);
     Rol::create([
-        'nombre'=>"supervisor",
-        'descripcion'=>"ACCESO DE ALTO NIVEL",
+        'nombre'=>"contador",
+        'descripcion'=>"Intermediario en las compras y ventas de productos",
        
     ]);
     }

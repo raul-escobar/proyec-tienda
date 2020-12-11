@@ -15,10 +15,28 @@ globales({{$cantidad}})
     <div class="card-category">
       Aqui encontraras todos los registros</div>
   </div>
-  <div class="ml-1 form-inline table-responsive">
-    <a class="btn btn-success btn-sm mt-1 mb-3 ml-3  btn-round" href="{{route('producto.create')}}"><i class="fa fa-plus"></i> Registrar</a><div class="btn-sm mt-3 mb-3 ml-3">{{$productos->links()}}</div>
+  <div class="ml-1 form-inline ">
+    <a class="btn btn-success btn-sm mt-1 mb-3 ml-3  btn-round" href="{{route('producto.create')}}"><i class="fa fa-plus"></i> Registrar</a><div class="btn-sm mt-3 mb-3 ml-3">{{$productos->appends(['search'=>request('search')])->links()}}</div>
+    <form action="{{route('producto.index')}}" method="" class="form-inline">
+      <label for="" class="nav-link">Buscar por categoria</label>
+      <div class="form-group dropdown mr-2">
+       
+  <select name="categorysearch" class="form-control selectpicker" id="categorysearch"  data-live-search="true" >
+    <option selected class="dropdown-item text-white"  value="">Seleccione</option>
+    @foreach ($listCategorias  as $nombre=>$id)
+    <option class="dropdown-item" aria-labelledby="dropdownMenuButton" value="{{$id}}">{{$nombre}}</option>
     
+        @endforeach
+  
+   
+
+  </select>
+    </div>
+    <input type="text" class="form-control" name="search" placeholder="Buscar por Nombre" value="{{request('search')}}">
+      <button type="submit" class="ml-2 btn btn-success btn-round btn-sm" >Buscar</button>
+      </form>
   </div>
+
   <div class="card-body table-responsive">
     <table class="table table-shopping">
 
@@ -38,7 +56,9 @@ globales({{$cantidad}})
             CATEGORIA
         </td>
          
-      
+        <td>
+          CANTIDAD
+      </td>
        
         
         
@@ -46,6 +66,9 @@ globales({{$cantidad}})
     <td>
       FECHA REGISTRO
   </td>
+  <td>
+    USUARIO
+</td>
           
             <td>
                 ACCIONES
@@ -66,11 +89,17 @@ globales({{$cantidad}})
               {{$producto->precio}}
           </td>
           <td>
-            @if ($producto->categoria!=null)
-            {{$producto->categoria->nombre}}
-            @endif
+        
+            {{$producto->category_id}}
+           
             
         </td>
+        <td>
+        
+          {{$producto->cantidad}}
+         
+          
+      </td>
         
       
        
@@ -78,7 +107,12 @@ globales({{$cantidad}})
     <td>
       {{$producto->created_at->format('d-M-Y')}}
   </td>
-            
+  <td>
+        
+    {{$producto->user->name}}
+   
+    
+</td>    
             <td>
                 <a href="{{route('producto.show',$producto->id)}}" class="btn btn-primary btn-sm  btn-round"><i class="material-icons">visibility</i></a>
                
