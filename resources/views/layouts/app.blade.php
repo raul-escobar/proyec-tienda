@@ -11,7 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+<script src="/bootstrap-4.5.3-dist/js/jquery-3.5.1.min.js"></script>
+<script src="/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

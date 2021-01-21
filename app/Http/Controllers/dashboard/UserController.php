@@ -4,6 +4,8 @@ namespace App\Http\Controllers\dashboard;
 
 use App\Rol;
 use App\User;
+use App\Venta;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditUser;
 use App\Http\Requests\StoreUser;
@@ -22,6 +24,10 @@ class UserController extends Controller
          return view('dashboard.user.index',['users'=>$users]);
     }
 
+    public function muestra(){
+        return view('dashboard.productos.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -31,7 +37,8 @@ class UserController extends Controller
     {
         $listRols=Rol::pluck('id','nombre','detalle');
 
-         return view("dashboard.user.create",['user'=>new User(),'listRols'=>$listRols]);
+        $creacion=true;
+         return view("dashboard.user.create",['user'=>new User(),'listRols'=>$listRols,'creacion'=>$creacion]);
     }
 
     /**
@@ -57,7 +64,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view ('dashboard.user.show',["user"=>$user]);
+        $productos=Product::with('categoria')->where('user_id','=',$user->id)->orderBy('id','desc');
+        $productos=$productos->count();
+        $ventas=Venta::where('comprador_id',$user->id)->count();
+        return view ('dashboard.user.show',["user"=>$user,"total"=>$productos,'ventas'=>$ventas]);
     }
 
     /**
@@ -69,10 +79,13 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $listRols=Rol::pluck('id','nombre','detalle');
+        $pass=$user->password;
+        $creacion=false;
 
-        return view('dashboard.user.edit',["user"=>$user,'listRols'=>$listRols]);
+        return view('dashboard.user.edit',["user"=>$user,'listRols'=>$listRols,"password"=>$pass,'creacion'=>$creacion]);
     }
 
+  
     /**
      * Update the specified resource in storage.
      *

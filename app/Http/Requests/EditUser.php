@@ -26,7 +26,7 @@ class EditUser extends FormRequest
         return [
             'name'=>'required|min:5|max:500',
             'email'=>'required|min:5|max:255|email|string|unique:users,email,'.$this->route('user')->id,//especificamos el id del usuario que le haremos excepcion para que pueda editar su perfil sin modificar el email
-            'password'=>'required|min:5|confirmed',
+            'password'=>'min:5',
            
             'rol_id'=>'required',
         ];

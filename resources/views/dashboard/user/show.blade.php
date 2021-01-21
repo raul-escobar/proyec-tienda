@@ -24,10 +24,24 @@
             </div>
             <div class="form-group">
                 <label for="url_clean">Rol</label>
-                <input type="text" name="url_clean"readonly class="form-control" id="url_clean" value="{{$user->rol_id}}">
+                <input type="text" name="url_clean"readonly class="form-control" id="url_clean" value="{{$user->rol->nombre}}">
           
             </div>
-           
+            <div class="form-group">
+              <label for="url_clean">Fecha de alta</label>
+              <input type="text" name="url_clean"readonly class="form-control" id="url_clean" value="{{$user->created_at}}">
+        
+          </div>
+          <div class="form-group">
+            <label for="url_clean">Transacciones realizadas</label>
+            <input type="text" name="url_clean"readonly class="form-control" id="url_clean" value="{{$ventas}}">
+      
+        </div>
+        <div class="form-group">
+          <label for="url_clean">Productos creados</label>
+          <input type="text" name="url_clean"readonly class="form-control" id="url_clean" value="{{$total}}">
+    
+      </div>
              
     </div>
 </div>     

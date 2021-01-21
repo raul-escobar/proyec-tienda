@@ -8,7 +8,7 @@
       Registro: {{$producto->nombre}}
     </h4>
     <div class="card-category">
-    Editando su informacion</div>
+    Editando Producto</div>
   </div>
  
   <div class="card-body"> 

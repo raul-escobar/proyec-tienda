@@ -11,51 +11,82 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
-     @if (auth()->user()->rol_id==3 || auth()->user()->rol_id==2)
-     <li class="nav-item {{ Request::path()=='dashboard/main' ? 'active':''}}">
-      <a class="nav-link" href="{{route('main.index')}}">
-        <i class="material-icons">location_city</i>
-        <p>Dashboard</p>
-      </a>
-    </li>
-    <li class="nav-item {{ Request::path()=='dashboard/cat' ? 'active':''}}">
-      <a class="nav-link" href="{{route('cat.index')}}">
-        <i class="material-icons">location_city</i>
-        <p>Categorias</p>
-      </a>
-    </li>
-    <li class="nav-item {{ Request::path()=='dashboard/user' ? 'active':''}}">
-      <a class="nav-link" href="{{route('user.index')}}">
-        <i class="material-icons">assignment_ind</i>
-        <p>Usuarios</p>
-      </a>
-    </li>
-     @endif
-      
-      
-      <li class="nav-item {{ Request::path()=='dashboard/producto' ? 'active':''}}">
-        <a class="nav-link" href="{{route('producto.index')}}">
-          <i class="material-icons">library_books</i>
-          <p>Productos</p>
+     
+      @if (auth()->user()->rol_id==3 || auth()->user()->rol_id==2)
+      @if (auth()->user()->rol_id==3)
+      <li class="nav-item {{ Request::path()=='dashboard/main' ? 'active':''}}">
+        <a class="nav-link" href="{{route('main.index')}}">
+         
+          <p>Dashboard</p>
         </a>
       </li>
-     
-   
-   
-     
-  
-      <li class="nav-item active-pro mb-3">
-        <p class="nav-link alert alert-success ">
-          <i class="material-icons text-white">person</i>
-        <label for="" class="text-white ">Usuario:{{auth()->user()->name}}</label>
-        <br>
-        <i class="material-icons text-white">task</i>
-        <label for="" class="text-white ">Rol:{{auth()->user()->rol->nombre}}</label>
-        </p>
-        
-        
+      <li class="nav-item {{ Request::path()=='dashboard/cat' ? 'active':''}}">
+        <a class="nav-link" href="{{route('cat.index')}}">
+         
+          <p>Categorias</p>
+        </a>
       </li>
+      @endif
+    
      
+     
+    
+     <li class="nav-item {{ Request::path()=='dashboard/user' ? 'active':''}}">
+       <a class="nav-link" href="{{route('user.index')}}">
+        
+         <p>Usuarios</p>
+       </a>
+     </li>
+      @endif
+       @if (auth()->user()->rol_id==4)
+       <li class="nav-item {{ Request::path()=='dashboard/ventas' ? 'active':''}}">
+        <a class="nav-link" href="{{route('ventas.contador')}}">
+         
+          <p>Ventas</p>
+        </a>
+      </li>
+      <li class="nav-item {{ Request::path()=='dashboard/contador/pagados' ? 'active':''}}">
+        <a class="nav-link" href="{{route('pagados')}}">
+         
+          <p>Pagados</p>
+        </a>
+      </li>
+       @endif
+     
+       <li class="nav-item {{ Request::path()=='dashboard/producto' ? 'active':''}}">
+         <a class="nav-link" href="{{route('producto.index')}}">
+           
+           <p>Productos</p>
+         </a>
+       </li>
+       <li class="nav-item {{ Request::path()=='dashboard/historial' ? 'active':''}}">
+        <a class="nav-link" href="{{route('comprados')}}">
+          
+          <p>Historial</p>
+        </a>
+      </li>
+       <li class="nav-item dropdown ml-auto">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Bienvenid@! {{auth()->user()->name}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ route('logout') }}"
+             onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+Cerrar sesion
+          </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+          </form>
+      </div>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{{route('home')}}">
+          
+          <p>Ir a la tienda</p>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

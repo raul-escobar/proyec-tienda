@@ -29,7 +29,9 @@
           <td>
             Correo
         </td>
-         
+        <td>
+          Monto Acumulado
+      </td>
             <td>
                 Acciones
             </td>
@@ -49,19 +51,26 @@
             <td>
                 {{$user->email}}
             </td>
-           
-            
             <td>
+              {{$user->cash}} $us
+          </td>
+            
+          <td>
                
-               
-                <a href="{{route('user.edit',$user->id)}}" class="btn btn-info btn-round"> <i class="material-icons">create</i> </a>
-               
-                    
-                    <button class="btn btn-danger btn-round" type="submit" data-toggle="modal" data-target="#deleteModal" data-id="{{ $user->id}}"><i class="material-icons">delete</i> </button>
-               
+            <a href="{{route('user.show',$user->id)}}" class="btn btn-warning btn-round"> <i class="material-icons">help</i> </a>
+            @if (auth()->user()->rol_id==2 && $user->rol->nombre=='supervisor')
+                
+            @else
+            <a href="{{route('user.edit',$user->id)}}" class="btn btn-info btn-round"> <i class="material-icons">create</i> </a>
+            <button class="btn btn-danger btn-round" type="submit" data-toggle="modal" data-target="#deleteModal" data-id="{{ $user->id}}"><i class="material-icons">delete</i> </button>
+
+            @endif
+             
+                  
+             
 
 
-            </td>
+          </td>
         </tr>
         @endforeach
     </tbody>
