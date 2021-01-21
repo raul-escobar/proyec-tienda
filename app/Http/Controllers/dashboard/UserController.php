@@ -4,6 +4,8 @@ namespace App\Http\Controllers\dashboard;
 
 use App\Rol;
 use App\User;
+use App\Venta;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditUser;
 use App\Http\Requests\StoreUser;
@@ -11,11 +13,19 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','rol.admin']);
+    }
     public function index()
     {
         $users=User::orderBy('id','desc')->paginate(8);
        
          return view('dashboard.user.index',['users'=>$users]);
+    }
+
+    public function muestra(){
+        return view('dashboard.productos.index');
     }
 
     /**
@@ -53,7 +63,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view ('dashboard.user.show',["user"=>$user]);
+        $productos=Product::with('categoria')->where('user_id','=',$user->id)->orderBy('id','desc');
+        $productos=$productos->count();
+        $ventas=Venta::where('comprador_id',$user->id)->count();
+        return view ('dashboard.user.show',["user"=>$user,"total"=>$productos,'ventas'=>$ventas]);
     }
 
     /**
@@ -65,8 +78,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $listRols=Rol::pluck('id','nombre','detalle');
-
-        return view('dashboard.user.edit',["user"=>$user,'listRols'=>$listRols]);
+        $pass=$user->password;
+        return view('dashboard.user.edit',["user"=>$user,'listRols'=>$listRols,"password"=>$pass]);
     }
 
     /**

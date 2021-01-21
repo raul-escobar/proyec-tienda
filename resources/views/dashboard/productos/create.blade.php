@@ -8,14 +8,15 @@
         Registro nuevo
       </h4>
       <div class="card-category">
-      Detalles del beneficiario</div>
+      Detalles del producto</div>
     </div>
    
     <div class="card-body">
 <form action="{{route("producto.store")}}" method="POST">
    
 
- @include('dashboard.productos._form')      
+ @include('dashboard.productos._form')   
+    
 </form>
     </div>
 </div>

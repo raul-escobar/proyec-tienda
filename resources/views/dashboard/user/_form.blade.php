@@ -11,7 +11,8 @@
             <div class="form-group">
                 <label for="email" class="bmd-label-floating">Correo</label>
                 <input type="email" name="email" class="form-control" id="email" value="{{old('email',$user->email)}}">
-          
+                <span id="error_email"></span>
+
             </div>
           
             <div class="form-group">
@@ -24,27 +25,33 @@
 
           </select>
             </div>
-          <div class="form-group">
-            <label for="password" class="bmd-label-floating">Contrasena</label>
-
-            
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-            
-               
-            
-            <div class="form-group">
-                <label for="password-confirm" class="bmd-label-floating">Confirmar Contrasena</label>
-
-                
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-               
-            </div>
-        </div>
-            
-              <input type="submit" class="btn btn-success btn-lg btn-round" value="Guardar">
+            @if (auth()->user()->rol_id==3)
          
-   
+            @else
+            <div class="form-group">
+                <label for="password" class="bmd-label-floating">Contrasena</label>
       
+                
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" value="">
+                
+                   
+                
+                <div class="form-group">
+                    <label for="password-confirm" class="bmd-label-floating">Confirmar Contrasena</label>
+      
+                    
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                   
+                </div>
+            </div>
+              @endif
+         
+              
+                <input type="submit" class="btn btn-success btn-lg btn-round" value="Guardar">
+           
+     
+    
+    
 
 
 

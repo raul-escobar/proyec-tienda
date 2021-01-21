@@ -9,11 +9,15 @@ use App\Http\Requests\StoreCategoria;
 
 class CategoriaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','rol.admin']);
+    }
     public function index()
     {
-        $categorias=Categoria::orderBy('id','desc')->paginate(10);
-       
-         return view('dashboard.categorias.index',['categorias'=>$categorias]);
+        $categorias=Categoria::orderBy('id','desc')->paginate(6);
+      $lista=$categorias->all();
+         return view('dashboard.categorias.index',['categorias'=>$categorias,"lista"=>$lista]);
     }
 
     /**
@@ -49,10 +53,10 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show(Categoria $cat)
     {
         
-        return view ('dashboard.categorias.show',["categoria"=>$categoria]);
+        return view ('dashboard.categorias.show',["categoria"=>$cat]);
     }
 
     /**
@@ -61,10 +65,10 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categoria $categoria)
+    public function edit(Categoria $cat)
     {
-       
-        return view('dashboard.categorias.edit',["categoria"=>$categoria]);
+      
+        return view('dashboard.categorias.edit',["categoria"=>$cat]);
     }
 
     /**
@@ -74,9 +78,9 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoria $request, Categoria $categoria)
+    public function update(StoreCategoria $request, Categoria $cat)
     {
-        $categoria->update($request->validated());
+        $cat->update($request->validated());
         return back()->with('status','Categoria Actualizada!');
     }
 
@@ -86,9 +90,9 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy(Categoria $cat)
     {
-        $categoria->delete();
+        $cat->delete();
         return back()->with('status','Categoria Eliminada!');
     }
 }
